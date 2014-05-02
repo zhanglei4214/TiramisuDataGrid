@@ -1,7 +1,8 @@
 ﻿using System;
 using TiramisuDataGrid.Configuration;
+using TiramisuDataGrid.Configuration.DataSource;
 
-namespace TiramisuDataGrid.Control
+namespace TiramisuDataGrid.DataSource
 {
     public class BindingAdjusterFactory
     {
@@ -15,13 +16,13 @@ namespace TiramisuDataGrid.Control
 
         #region Public Methods
 
-        public static IBindingAdjuster Create(RenderMode mode)
+        public static IBindingAdjuster Create(DataSourceMode mode)
         {
             switch (mode)
             {
-                case RenderMode.Standard:
+                case DataSourceMode.Default:
                     return new DumbAdjuster();
-                case RenderMode.Paging:
+                case DataSourceMode.Truncate:
                     return new PagingAdjuster();
                 default:
                     throw new NotSupportedException("Not supported yet.");

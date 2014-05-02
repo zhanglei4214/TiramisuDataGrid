@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace TiramisuDataGrid.Control
 {
@@ -14,16 +16,14 @@ namespace TiramisuDataGrid.Control
 
         #region Public Methods
 
-        public static IControlInitializer Create(string mode)
+        public static UIElement Create(string mode)
         {
             switch (mode)
             {
                 case "Standard":
-                    return new StandardController();
+                    return new StackPanel();
                 case "Paging":
-                    return new PagingController();
-                case "Benchmark":
-                    return new BenchmarkController();
+                    return new PagingControl();
                 default:
                     throw new NotSupportedException("mode " + mode.ToString() + " not supported.");
             }

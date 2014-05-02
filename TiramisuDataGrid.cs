@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using TiramisuDataGrid.Configuration;
-using TiramisuDataGrid.DataSource;
+using TiramisuDataGrid.Configuration.Control;
+using TiramisuDataGrid.Configuration.DataSource;
 using TiramisuDataGrid.Virtualization;
 
 namespace TiramisuDataGrid
@@ -11,16 +10,16 @@ namespace TiramisuDataGrid
     public class TiramisuDataGrid : DockPanel
     {        
         #region Dependency Properties
-        
-        public static readonly DependencyProperty RenderConfigurationProperty = DependencyProperty.Register("RenderConfiguration", typeof(RenderConfiguration), typeof(TiramisuDataGrid), new PropertyMetadata(new RenderConfiguration(RenderMode.Paging), OnRenderConfigurationChanged));
 
-        public static readonly DependencyProperty DataSourceProperty = DependencyProperty.Register("DataSource", typeof(IDataSourceProvider), typeof(TiramisuDataGrid), new PropertyMetadata(null, OnDataSourceChanged));
+        public static readonly DependencyProperty ControlTemplateProperty = DependencyProperty.Register("ControlTemplate", typeof(IControlConfiguration), typeof(TiramisuDataGrid), new PropertyMetadata(new StandardConfiguration(), OnControlTemplateChanged));
+
+        public static readonly DependencyProperty DataSourceProperty = DependencyProperty.Register("DataSource", typeof(IDataSourceConfiguration), typeof(TiramisuDataGrid), new PropertyMetadata(null, OnDataSourceChanged));
 
         #endregion
 
         #region Fields
 
-        private IVirtualizer virtualizer;
+        private readonly Proxy proxy;
 
         #endregion
 
@@ -28,65 +27,42 @@ namespace TiramisuDataGrid
 
         public TiramisuDataGrid()
         {
-            this.AddHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler(this.ScrollChangedHandler));
-
-            this.InitializeVirtualizer();
+            this.proxy = new Proxy(this);
         }
 
         #endregion
 
         #region Properties
 
-        public RenderConfiguration RenderConfiguration
+        public IControlConfiguration ControlTemplate
         {
             get
             {
-                return (RenderConfiguration)GetValue(RenderConfigurationProperty);
+                return (IControlConfiguration)GetValue(ControlTemplateProperty);
             }
 
             set
             {
-                SetValue(RenderConfigurationProperty, value);
-
-                this.virtualizer.Observer.Configuration = value;
+                SetValue(ControlTemplateProperty, value);
             }
         }
 
-        public IDataSourceProvider DataSource
+        public IDataSourceConfiguration DataSource
         {
             get
             {
-                return (IDataSourceProvider)GetValue(DataSourceProperty);
+                return (IDataSourceConfiguration)GetValue(DataSourceProperty);
             }
 
             set
-            {
-                SetValue(DataSourceProperty, value);
-
-                this.virtualizer.Observer.DataSource = value;
+            {                
+                SetValue(DataSourceProperty, value);                            
             }
         }
 
-        #endregion
-
-        #region Protected Methods
-
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            DateTime start = DateTime.Now;
-
-            base.OnRender(drawingContext);
-
-            DateTime end = DateTime.Now;            
-
-            this.LoggingBenchmarkTest(end - start);
-        }
-
-        #endregion
+        #endregion        
 
         #region Private Methods
-
-        #region Dependecy Property Changed Event Handlers
 
         private static void OnDataSourceChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -97,17 +73,23 @@ namespace TiramisuDataGrid
                 return;
             }
 
-            IDataSourceProvider dataSource = e.NewValue as IDataSourceProvider;
+            IDataSourceConfiguration newValue = e.NewValue as IDataSourceConfiguration;
+            IDataSourceConfiguration oldValue = e.OldValue as IDataSourceConfiguration;
 
-            if (dataSource == null)
+            if (oldValue != null)
             {
-                return;
+                me.proxy.Detach(oldValue);
             }
 
-            me.DataSource = dataSource;
+            if (newValue != null)
+            {
+                me.proxy.Attach(newValue);
+            }
+
+            me.DataSource = newValue;
         }
 
-        private static void OnRenderConfigurationChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private static void OnControlTemplateChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             TiramisuDataGrid me = sender as TiramisuDataGrid;
 
@@ -116,36 +98,21 @@ namespace TiramisuDataGrid
                 return;
             }
 
-            RenderConfiguration configuration = e.NewValue as RenderConfiguration;
+            IControlConfiguration newValue = e.NewValue as IControlConfiguration;
+            IControlConfiguration oldValue = e.OldValue as IControlConfiguration;
 
-            if (configuration == null)
+            if (oldValue != null)
             {
-                throw new NullReferenceException("RenderConfiguration cannot be null.");
+                me.proxy.Detach(oldValue);
             }
 
-            me.RenderConfiguration = configuration;
+            if (newValue != null)
+            {
+                me.proxy.Attach(newValue);
+            }
+
+            me.ControlTemplate = newValue;
         }
-
-        #endregion
-
-        private void InitializeVirtualizer()
-        {
-            this.virtualizer = new Virtualizer(this);
-        }
-
-        private void ScrollChangedHandler(object sender, ScrollChangedEventArgs e)
-        {
-            this.virtualizer.Update();
-        }        
-
-        #region Benchmark Logging
-
-        private void LoggingBenchmarkTest(TimeSpan duration)
-        {            
-            //// TODO: add more logic.
-        }
-
-        #endregion
 
         #endregion
     }

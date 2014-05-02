@@ -1,6 +1,6 @@
 ﻿namespace TiramisuDataGrid.Configuration
 {
-    public enum RenderMode
+    public enum Mode
     {
         Standard,
 

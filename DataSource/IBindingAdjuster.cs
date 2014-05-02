@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using TiramisuDataGrid.Configuration;
+using TiramisuDataGrid.Configuration.DataSource;
 
-namespace TiramisuDataGrid.Control
+namespace TiramisuDataGrid.DataSource
 {
     public interface IBindingAdjuster
     {
-        IEnumerable Adjust(object original, RenderConfiguration renderConfiguration, AdjustConfiguration adjustConfiguration);
+        IEnumerable Adjust(object original, AdjustConfiguration configuration);
     }
 }

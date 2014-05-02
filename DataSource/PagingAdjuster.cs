@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using TiramisuDataGrid.Configuration;
+using TiramisuDataGrid.Configuration.Control;
+using TiramisuDataGrid.Configuration.DataSource;
 
-namespace TiramisuDataGrid.Control
+namespace TiramisuDataGrid.DataSource
 {
     public class PagingAdjuster : IBindingAdjuster
     {
@@ -16,11 +18,11 @@ namespace TiramisuDataGrid.Control
 
         #region Public Methods
 
-        public IEnumerable Adjust(object original, RenderConfiguration renderConfiguration, AdjustConfiguration adjustConfiguration)
+        public IEnumerable Adjust(object original, AdjustConfiguration configuration)
         {
-            if (renderConfiguration == null)
+            if (configuration == null)
             {
-                throw new NullReferenceException("PagingRenderConfiguration instance is null.");
+                throw new NullReferenceException("configuration instance is null.");
             }
 
             if (original == null)
@@ -28,36 +30,37 @@ namespace TiramisuDataGrid.Control
                 return null;
             }
 
-            return this.Adjust(original as IList, renderConfiguration.Paging, adjustConfiguration);
+            return this.Adjust(original as IList, configuration);
         }
 
         #endregion
 
         #region Private Methods
 
-        private IEnumerable Adjust(IList collection, PagingRenderConfiguration renderConfiguration, AdjustConfiguration adjustConfiguration)
+        private IEnumerable Adjust(IList collection, AdjustConfiguration configuration)
         {
-            if (collection.Count <= renderConfiguration.Max)
-            {
-                return collection;
-            }
+            return collection;
+            //if (collection.Count <= renderConfiguration.Max)
+            //{
+            //    return collection;
+            //}
 
-            int count = 0;
-            IList tmp = new ArrayList();
-            foreach (object item in collection)
-            {
-                if (count < renderConfiguration.Max)
-                {
-                    tmp.Add(item);
-                    count++;
-                }
-                else
-                {
-                    break;
-                }
-            }
+            //int count = 0;
+            //IList tmp = new ArrayList();
+            //foreach (object item in collection)
+            //{
+            //    if (count < renderConfiguration.Max)
+            //    {
+            //        tmp.Add(item);
+            //        count++;
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
+            //}
 
-            return tmp;
+            //return tmp;
         }
 
         #endregion
