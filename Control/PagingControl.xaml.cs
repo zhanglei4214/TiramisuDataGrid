@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TiramisuDataGrid.Common;
+using TiramisuDataGrid.EventArgs;
 
 namespace TiramisuDataGrid.Control
 {
@@ -19,9 +11,57 @@ namespace TiramisuDataGrid.Control
     /// </summary>
     public partial class PagingControl : StackPanel
     {
+        #region Constructors
+
         public PagingControl()
         {
             InitializeComponent();
+
+            this.DataContext = this;
+
+            this.InitializeCommand();
         }
+
+        #endregion
+
+        #region Properties
+
+        public ICommand GoPrevious { get; private set; }
+
+        public ICommand GoNext { get; private set; }
+
+        #endregion
+
+        #region Private Methods
+
+        private void InitializeCommand()
+        {
+            this.GoPrevious = new DelegateCommand(this.GoPreviousHandler, this.CanGoPreviousHandler);
+
+            this.GoNext = new DelegateCommand(this.GoNextHandler, this.CanGoNextHandler);
+        }
+
+        private void GoPreviousHandler(object obj)
+        {
+            EventManager.Publish<PageChangeEventArgs, PageOption>(PageOption.Previous);
+        }
+
+        private bool CanGoPreviousHandler(object obj)
+        {
+            return true;
+        }
+
+        private void GoNextHandler(object obj)
+        {
+            EventManager.Publish<PageChangeEventArgs, PageOption>(PageOption.Next);
+        }
+
+        private bool CanGoNextHandler(object obj)
+        {
+            return true;
+        }
+
+        #endregion
+
     }
 }

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>ExternalReferences\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -45,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\DependencyAttribute.cs" />
+    <Compile Include="Common\DelegateCommand.cs" />
+    <Compile Include="Common\EventManager.cs" />
     <Compile Include="Configuration\ConfigurationBase.cs" />
     <Compile Include="Configuration\ConfigurationChangeAction.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
@@ -59,14 +64,12 @@
     <Compile Include="Configuration\DataSource\IDataSourceConfiguration.cs" />
     <Compile Include="Configuration\DataSource\InMemoryDataSourceConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Control\PageOption.cs" />
     <Compile Include="Control\PagingControl.xaml.cs">
       <DependentUpon>PagingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataSource\DumbAdjuster.cs" />
-    <Compile Include="DataSource\IBindingAdjuster.cs" />
-    <Compile Include="DataSource\PagingAdjuster.cs" />
-    <Compile Include="DataSource\InMemorySourceBinder.cs" />
     <Compile Include="EventArgs\ConfigurationChangedEventArgs.cs" />
+    <Compile Include="EventArgs\PageChangeEventArgs.cs" />
     <Compile Include="ExtensionMethods\UIElementExtensionMethods.cs" />
     <Compile Include="Configuration\Control\PagingConfiguration.cs" />
     <Compile Include="Configuration\Configuration.cs" />
@@ -77,7 +80,6 @@
     <Compile Include="Proxy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="Resource\" />
   </ItemGroup>
   <ItemGroup>
