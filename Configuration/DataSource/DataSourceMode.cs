@@ -2,8 +2,10 @@
 {
     public enum DataSourceMode
     {
-        Default,
+        InMemory,
 
-        Truncate
+        File,
+
+        Database
     }
 }

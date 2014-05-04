@@ -28,7 +28,7 @@ namespace TiramisuDataGrid.Configuration
 
         public void Add(IConfiguration configuration)
         {
-            this.memo[configuration] = new ConfigurationMetaData();
+            this.memo[configuration] = new ConfigurationMetaData(configuration);
 
             this.AddDependency(configuration);
 
@@ -59,7 +59,13 @@ namespace TiramisuDataGrid.Configuration
         {
             foreach (var meta in this.memo)
             {
-                meta.Value.SolveDependency(dependency.Name);
+                if (meta.Key.Name == dependency.Name)
+                {
+                    continue;
+                }
+
+                meta.Value.SolveDependency(dependency);
+
                 if (meta.Value.DependencySolved == true && this.pendingQueue.ContainsKey(meta.Key) == true)
                 {
                     meta.Key.Attach();

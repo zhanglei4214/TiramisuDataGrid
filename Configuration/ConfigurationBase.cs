@@ -50,6 +50,10 @@ namespace TiramisuDataGrid.Configuration
             }
         }
 
+        public virtual void SolveDependency(IConfiguration dependency)
+        {
+        }
+
         #endregion
 
         #region Protected Methods        

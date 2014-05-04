@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Controls;
-using TiramisuDataGrid.DataSource;
 
 namespace TiramisuDataGrid.Configuration.DataSource
 {
@@ -16,7 +15,7 @@ namespace TiramisuDataGrid.Configuration.DataSource
         #region Constructors
 
         public InMemoryDataSourceConfiguration(ObservableCollection<T> collection)
-            : this(DataSourceMode.Default, collection)
+            : this(DataSourceMode.InMemory, collection)
         {
         }
 
@@ -42,10 +41,19 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #region Public Methods
 
-        public override void Bind()
+        public override void Bind(BindingConfiguration configuration)
         {
             //// TODO: Needs to enhance.
-            ((DataGrid)this.Owner.Children[this.Owner.Children.Count - 1]).ItemsSource = this.collection;
+            int index = this.Owner.Children.Count - 1;
+
+            if (configuration.Limit == int.MaxValue)
+            {
+                ((DataGrid)this.Owner.Children[index]).ItemsSource = this.collection;
+            }
+            else
+            {
+                ((DataGrid)this.Owner.Children[index]).ItemsSource = this.collection.Take(configuration.Limit);
+            }
         }
 
         #endregion

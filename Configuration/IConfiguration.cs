@@ -16,5 +16,7 @@ namespace TiramisuDataGrid.Configuration
         void Attach();
 
         void Detach();
+
+        void SolveDependency(IConfiguration dependency);
     }
 }

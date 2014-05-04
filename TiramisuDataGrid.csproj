@@ -53,17 +53,15 @@
     <Compile Include="Configuration\Control\ControlMode.cs" />
     <Compile Include="Configuration\Control\IControlConfiguration.cs" />
     <Compile Include="Configuration\Control\StandardConfiguration.cs" />
-    <Compile Include="Configuration\DataSource\AdjustConfiguration.cs" />
+    <Compile Include="Configuration\DataSource\BindingConfiguration.cs" />
     <Compile Include="Configuration\DataSource\DataSourceConfigurationBase.cs" />
     <Compile Include="Configuration\DataSource\DataSourceMode.cs" />
     <Compile Include="Configuration\DataSource\IDataSourceConfiguration.cs" />
     <Compile Include="Configuration\DataSource\InMemoryDataSourceConfiguration.cs" />
-    <Compile Include="Configuration\DataSource\TruncateDataSourceConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Control\PagingControl.xaml.cs">
       <DependentUpon>PagingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataSource\BindingAdjusterFactory.cs" />
     <Compile Include="DataSource\DumbAdjuster.cs" />
     <Compile Include="DataSource\IBindingAdjuster.cs" />
     <Compile Include="DataSource\PagingAdjuster.cs" />

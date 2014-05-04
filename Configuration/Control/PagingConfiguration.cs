@@ -13,7 +13,7 @@
         public PagingConfiguration()
             : base(ControlMode.Paging)
         {
-            this.Max = 200;
+            this.Max = 20;
         }
 
         #endregion

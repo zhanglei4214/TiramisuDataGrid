@@ -6,6 +6,8 @@ namespace TiramisuDataGrid.Configuration
     {
         #region Fields
 
+        private readonly IConfiguration owner;
+
         private bool dependencySolved;
 
         private Dictionary<string, bool> dependencies;
@@ -14,8 +16,10 @@ namespace TiramisuDataGrid.Configuration
 
         #region Constructors
 
-        public ConfigurationMetaData()
+        public ConfigurationMetaData(IConfiguration owner)
         {
+            this.owner = owner;
+
             this.dependencies = new Dictionary<string, bool>();
 
             this.dependencySolved = true;
@@ -24,6 +28,14 @@ namespace TiramisuDataGrid.Configuration
         #endregion
 
         #region Properties
+
+        public IConfiguration Owner
+        {
+            get
+            {
+                return this.owner;
+            }
+        }
 
         public bool DependencySolved
         {
@@ -44,9 +56,11 @@ namespace TiramisuDataGrid.Configuration
             this.dependencySolved = false;
         }
 
-        public void SolveDependency(string name)
+        public void SolveDependency(IConfiguration configuration)
         {
-            this.dependencies[name] = true;
+            this.dependencies[configuration.Name] = true;
+
+            this.Owner.SolveDependency(configuration);
 
             foreach (bool result in this.dependencies.Values)
             {
