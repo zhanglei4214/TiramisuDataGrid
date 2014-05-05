@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using TiramisuDataGrid.Attributes;
 using TiramisuDataGrid.Configuration.Control;
 
@@ -33,6 +34,8 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         public abstract void Bind(BindingConfiguration configuration);
 
+        public abstract void AdjustBinding(BindingConfiguration configuration, string changedProperty);
+
         public override void Attach()
         {
             base.Attach();
@@ -59,15 +62,32 @@ namespace TiramisuDataGrid.Configuration.DataSource
                 throw new NullReferenceException("ControlConfiguraiton is null.");
             }
 
+            BindingConfiguration configuration;
+
             switch (dependency.Mode)
             {
                 case ControlMode.Standard:
-                    return new BindingConfiguration();
+                    configuration = new BindingConfiguration();
+                    break;
                 case ControlMode.Paging:
-                    return new BindingConfiguration(((PagingConfiguration)dependency).Max);
+                    configuration = new BindingConfiguration(((PagingConfiguration)dependency).Max);
+                    break;
                 default:
                     throw new NotSupportedException(dependency.Mode.ToString() + " is not supported yet.");
             }
+
+            configuration.PropertyChanged += this.BindingConfigurationPropertyChangedHandler;
+
+            return configuration;
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        private void BindingConfigurationPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+        {
+            this.AdjustBinding(sender as BindingConfiguration, e.PropertyName);
         }
 
         #endregion
