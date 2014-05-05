@@ -3,7 +3,7 @@ using Microsoft.Practices.Prism.Events;
 
 namespace TiramisuDataGrid.Common
 {
-    public class EventManager
+    public class EventRouter
     {
         #region Fields
 
@@ -13,7 +13,7 @@ namespace TiramisuDataGrid.Common
 
         #region Constructors
 
-        static EventManager()
+        static EventRouter()
         {
             eventAggregator = new EventAggregator();
         }

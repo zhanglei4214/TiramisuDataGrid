@@ -1,18 +1,20 @@
 ﻿using System;
+using TiramisuDataGrid.Common;
 
 namespace TiramisuDataGrid.Attributes
 {
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
     public class DependencyAttribute : Attribute
     {
         #region Fields
 
-        private readonly string name;
+        private readonly DependencyName name;
 
         #endregion
 
         #region Constructors
 
-        public DependencyAttribute(string name)
+        public DependencyAttribute(DependencyName name)
         {
             this.name = name;
         }
@@ -21,7 +23,7 @@ namespace TiramisuDataGrid.Attributes
 
         #region Properties
 
-        public string Name
+        public DependencyName Name
         {
             get
             {

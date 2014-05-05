@@ -1,22 +1,34 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using TiramisuDataGrid.Attributes;
+using TiramisuDataGrid.Common;
 using TiramisuDataGrid.Control;
+using TiramisuDataGrid.EventArgs;
 
 namespace TiramisuDataGrid.Configuration.Control
 {
-    public class ControlConfigurationBase : ConfigurationBase, IControlConfiguration
+    [Dependency(DependencyName.LayoutInitialized)]
+    public class ControlConfigurationBase : IControlConfiguration
     {        
         #region Constructors
 
         public ControlConfigurationBase(ControlMode mode)
-            : base("ControlConfiguration")
         {
             this.Mode = mode;
         }
 
         #endregion
 
+        #region Events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
         #region Properties
+
+        public DockPanel Owner { get; set; }
 
         public ControlMode Mode { get; private set; }
 
@@ -24,16 +36,31 @@ namespace TiramisuDataGrid.Configuration.Control
 
         #region Public Methods
 
-        public override void Attach()
+        public void Attach()
         {
-            base.Attach();
+            this.UpdateLayout();
 
-            this.UpdateLayout();                   
+            EventRouter.Publish<DependencyEvent, DependencyInfo>(new DependencyInfo(DependencyName.ControlTemplate, this));             
         }
 
-        public override void Detach()
+        public void Detach()
         {
-            base.Detach();
+        }
+
+        public void ResolveDependency(object dependency)
+        {
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        protected void NotifyPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         #endregion

@@ -3,7 +3,7 @@ using TiramisuDataGrid.Control;
 
 namespace TiramisuDataGrid.EventArgs
 {
-    public class PageChangeEventArgs : CompositePresentationEvent<PageOption>
+    public class PageChangeEvent : CompositePresentationEvent<PageOption>
     {
     }
 }

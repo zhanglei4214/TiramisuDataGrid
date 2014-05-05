@@ -1,8 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using TiramisuDataGrid.Attributes;
+using TiramisuDataGrid.Common;
 using TiramisuDataGrid.Configuration.Control;
 using TiramisuDataGrid.Configuration.DataSource;
+using TiramisuDataGrid.EventArgs;
 using TiramisuDataGrid.Virtualization;
 
 namespace TiramisuDataGrid
@@ -61,6 +63,13 @@ namespace TiramisuDataGrid
         }
 
         #endregion        
+
+        protected override void OnInitialized(System.EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            EventRouter.Publish<DependencyEvent, DependencyInfo>(new DependencyInfo(DependencyName.LayoutInitialized));
+        }
 
         #region Private Methods
 

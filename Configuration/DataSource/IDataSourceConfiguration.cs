@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using TiramisuDataGrid.Configuration.Control;
+﻿using TiramisuDataGrid.Configuration.Control;
 
 namespace TiramisuDataGrid.Configuration.DataSource
 {

@@ -75,7 +75,7 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         private void HookEvents()
         {
-            EventManager.Subscribe<PageChangeEventArgs, PageOption>(this.PageChangeEventHandler);
+            EventRouter.Subscribe<PageChangeEvent, PageOption>(this.PageChangeEventHandler);
         }
 
         private void PageChangeEventHandler(PageOption option)

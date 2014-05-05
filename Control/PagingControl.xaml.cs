@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using TiramisuDataGrid.Common;
 using TiramisuDataGrid.EventArgs;
@@ -43,7 +42,7 @@ namespace TiramisuDataGrid.Control
 
         private void GoPreviousHandler(object obj)
         {
-            EventManager.Publish<PageChangeEventArgs, PageOption>(PageOption.Previous);
+            EventRouter.Publish<PageChangeEvent, PageOption>(PageOption.Previous);
         }
 
         private bool CanGoPreviousHandler(object obj)
@@ -53,7 +52,7 @@ namespace TiramisuDataGrid.Control
 
         private void GoNextHandler(object obj)
         {
-            EventManager.Publish<PageChangeEventArgs, PageOption>(PageOption.Next);
+            EventRouter.Publish<PageChangeEvent, PageOption>(PageOption.Next);
         }
 
         private bool CanGoNextHandler(object obj)

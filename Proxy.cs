@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using TiramisuDataGrid.Configuration;
+﻿using TiramisuDataGrid.Configuration;
 
 namespace TiramisuDataGrid.Virtualization
 {
@@ -34,26 +33,14 @@ namespace TiramisuDataGrid.Virtualization
         {
             configuration.Owner = this.owner;
 
-            configuration.PropertyChanged += this.ConfigurationPropertyChangedHandler;
-
             this.manager.Add(configuration);
         }
 
         public void Detach(IConfiguration configuraiton)
-        {
-            configuraiton.PropertyChanged -= this.ConfigurationPropertyChangedHandler;
-
+        {           
             this.manager.Remove(configuraiton);
         }
         
-        #endregion
-
-        #region Private Methods 
-
-        private void ConfigurationPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
-        {
-        }
-
         #endregion
     }
 }

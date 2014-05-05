@@ -47,11 +47,11 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
             if (configuration.Limit == int.MaxValue)
             {
-                ((DataGrid)this.Owner.Children[index]).ItemsSource = this.collection;
+                ((ItemsControl)this.Owner.Children[index]).ItemsSource = this.collection;
             }
             else
             {
-                ((DataGrid)this.Owner.Children[index]).ItemsSource = this.collection.Take(configuration.Limit);
+                ((ItemsControl)this.Owner.Children[index]).ItemsSource = this.collection.Take(configuration.Limit);
             }
         }
 
@@ -60,7 +60,7 @@ namespace TiramisuDataGrid.Configuration.DataSource
             if (changedProperty == "Skip")
             {
                 int index = this.GetDataGridIndex();
-                ((DataGrid)this.Owner.Children[index]).ItemsSource = this.collection.Skip(configuration.Skip).Take(configuration.Limit);
+                ((ItemsControl)this.Owner.Children[index]).ItemsSource = this.collection.Skip(configuration.Skip).Take(configuration.Limit);
             }
         }
 

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Controls;
 using TiramisuDataGrid.Attributes;
+using TiramisuDataGrid.Common;
 using TiramisuDataGrid.Configuration.Control;
 
 namespace TiramisuDataGrid.Configuration.DataSource
 {
-    [Dependency("ControlConfiguration")]
-    public abstract class DataSourceConfigurationBase : ConfigurationBase, IDataSourceConfiguration
+    [Dependency(DependencyName.ControlTemplate)]
+    public abstract class DataSourceConfigurationBase : IDataSourceConfiguration
     {
         #region Fields
 
@@ -17,14 +19,21 @@ namespace TiramisuDataGrid.Configuration.DataSource
         #region Constructors
 
         public DataSourceConfigurationBase(DataSourceMode mode)
-            : base("DataSourceConfiguration")
         {
             this.Mode = mode;
         }
 
         #endregion
 
+        #region Events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
         #region Properties
+
+        public DockPanel Owner { get; set; }
 
         public DataSourceMode Mode { get; private set; }
 
@@ -36,21 +45,21 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         public abstract void AdjustBinding(BindingConfiguration configuration, string changedProperty);
 
-        public override void Attach()
+        public void Attach()
         {
-            base.Attach();
-
             this.Bind(this.bindingConfiguration);
         }
 
-        public override void Detach()
+        public void Detach()
         {
-            base.Detach();
         }
 
-        public override void SolveDependency(IConfiguration dependency)
+        public void ResolveDependency(object dependency)
         {
-            base.SolveDependency(dependency);
+            if (this.bindingConfiguration != null)
+            {
+                this.bindingConfiguration.PropertyChanged -= this.BindingConfigurationPropertyChangedHandler;
+            }
 
             this.bindingConfiguration = this.CreatBindingConfiguration(dependency as IControlConfiguration);
         }
@@ -84,6 +93,14 @@ namespace TiramisuDataGrid.Configuration.DataSource
         #endregion
 
         #region Protected Methods
+
+        protected void NotifyPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         private void BindingConfigurationPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
         {

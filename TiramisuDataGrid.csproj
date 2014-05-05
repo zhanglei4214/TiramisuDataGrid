@@ -48,12 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\DependencyAttribute.cs" />
+    <Compile Include="Common\DependencyInfo.cs" />
+    <Compile Include="Common\DependencyName.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
-    <Compile Include="Common\EventManager.cs" />
-    <Compile Include="Configuration\ConfigurationBase.cs" />
+    <Compile Include="Common\EventRouter.cs" />
     <Compile Include="Configuration\ConfigurationChangeAction.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Configuration\ConfigurationMetaData.cs" />
     <Compile Include="Configuration\Control\ControlConfigurationBase.cs" />
     <Compile Include="Configuration\Control\ControlMode.cs" />
     <Compile Include="Configuration\Control\IControlConfiguration.cs" />
@@ -68,14 +68,13 @@
     <Compile Include="Control\PagingControl.xaml.cs">
       <DependentUpon>PagingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EventArgs\ConfigurationChangedEventArgs.cs" />
-    <Compile Include="EventArgs\PageChangeEventArgs.cs" />
+    <Compile Include="Converters\ControlTypeConverter.cs" />
+    <Compile Include="EventArgs\DependencyEvent.cs" />
+    <Compile Include="EventArgs\PageChangeEvent.cs" />
     <Compile Include="ExtensionMethods\UIElementExtensionMethods.cs" />
     <Compile Include="Configuration\Control\PagingConfiguration.cs" />
-    <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="TiramisuDataGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Configuration\Mode.cs" />
     <Compile Include="Control\ControlFactory.cs" />
     <Compile Include="Proxy.cs" />
   </ItemGroup>
