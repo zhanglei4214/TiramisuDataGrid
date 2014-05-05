@@ -52,7 +52,6 @@
     <Compile Include="Common\DependencyName.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\EventRouter.cs" />
-    <Compile Include="Configuration\ConfigurationChangeAction.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\Control\ControlConfigurationBase.cs" />
     <Compile Include="Configuration\Control\ControlMode.cs" />
