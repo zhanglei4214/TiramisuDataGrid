@@ -60,10 +60,48 @@ namespace TiramisuDataGrid.Converters
             {
                 return new PagingConfiguration();
             }
+            else if (value.StartsWith("Paging") == true)
+            {
+                return this.TryInstantiatePagingControlConfiguration(value);
+            }
             else
             {
-                throw new InvalidCastException("");
+                throw new InvalidCastException("Cannot cast " + value);
             }
+        }
+
+        private IControlConfiguration TryInstantiatePagingControlConfiguration(string value)
+        {
+            string[] arguments = value.Split(new char[] { ',' });
+
+            if (arguments.Length != 2)
+            {
+                throw new InvalidCastException("Cannot cast " + value);
+            }
+
+            string first = arguments[0].Trim();
+            if (first != "Paging")
+            {
+                throw new InvalidCastException("Cannot cast " + value);
+            }
+
+            string second = arguments[1].Trim();
+
+            arguments = second.Split(new char[] { '=' });
+            first = arguments[0].Trim();
+            if (first != "Max")
+            {
+                throw new InvalidCastException("Cannot cast " + value);
+            }
+
+            second = arguments[1].Trim();
+            int result;
+            if (int.TryParse(second, out result) == false)
+            {
+                throw new InvalidCastException("Cannot cast " + value);
+            }
+
+            return new PagingConfiguration(result);
         }
 
         #endregion

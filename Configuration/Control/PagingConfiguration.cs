@@ -10,10 +10,15 @@
 
         #region Constructors
 
-        public PagingConfiguration()
+        public PagingConfiguration(int max)
             : base(ControlMode.Paging)
         {
-            this.Max = 20;
+            this.Max = max;
+        }
+
+        public PagingConfiguration()
+            : this(50)
+        {
         }
 
         #endregion

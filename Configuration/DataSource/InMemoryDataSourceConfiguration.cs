@@ -43,7 +43,7 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         public override void Bind(BindingConfiguration configuration)
         {            
-            int index = this.GetDataGridIndex();
+            int index = this.GetItemsControlIndex();
 
             if (configuration.Limit == int.MaxValue)
             {
@@ -59,7 +59,7 @@ namespace TiramisuDataGrid.Configuration.DataSource
         {
             if (changedProperty == "Skip")
             {
-                int index = this.GetDataGridIndex();
+                int index = this.GetItemsControlIndex();
                 ((ItemsControl)this.Owner.Children[index]).ItemsSource = this.collection.Skip(configuration.Skip).Take(configuration.Limit);
             }
         }
@@ -68,9 +68,8 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #region Private Methods
 
-        private int GetDataGridIndex()
+        private int GetItemsControlIndex()
         {
-            //// TODO: Needs to enhance.
             return this.Owner.Children.Count - 1;
         }
 
