@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using TiramisuDataGrid.Attributes;
 using TiramisuDataGrid.Common;
-using TiramisuDataGrid.EventArgs;
+using TiramisuDataGrid.Event;
 
 namespace TiramisuDataGrid.Configuration
 {

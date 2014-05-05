@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 using TiramisuDataGrid.Common;
-using TiramisuDataGrid.EventArgs;
+using TiramisuDataGrid.Event;
 
 namespace TiramisuDataGrid.Control
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Controls;
-using TiramisuDataGrid.EventArgs;
+using TiramisuDataGrid.Event;
 
 namespace TiramisuDataGrid.Configuration
 {

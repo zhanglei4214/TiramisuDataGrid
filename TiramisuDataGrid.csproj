@@ -68,8 +68,8 @@
       <DependentUpon>PagingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ControlTypeConverter.cs" />
-    <Compile Include="EventArgs\DependencyEvent.cs" />
-    <Compile Include="EventArgs\PageChangeEvent.cs" />
+    <Compile Include="Event\DependencyEvent.cs" />
+    <Compile Include="Event\PageChangeEvent.cs" />
     <Compile Include="ExtensionMethods\UIElementExtensionMethods.cs" />
     <Compile Include="Configuration\Control\PagingConfiguration.cs" />
     <Compile Include="TiramisuDataGrid.cs" />

@@ -2,7 +2,7 @@
 using TiramisuDataGrid.Attributes;
 using TiramisuDataGrid.Common;
 
-namespace TiramisuDataGrid.EventArgs
+namespace TiramisuDataGrid.Event
 {
     public class DependencyEvent : CompositePresentationEvent<DependencyInfo>
     {

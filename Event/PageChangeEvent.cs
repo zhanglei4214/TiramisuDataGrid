@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Events;
 using TiramisuDataGrid.Control;
 
-namespace TiramisuDataGrid.EventArgs
+namespace TiramisuDataGrid.Event
 {
     public class PageChangeEvent : CompositePresentationEvent<PageOption>
     {

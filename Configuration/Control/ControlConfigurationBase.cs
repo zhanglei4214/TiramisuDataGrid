@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using TiramisuDataGrid.Attributes;
 using TiramisuDataGrid.Common;
 using TiramisuDataGrid.Control;
-using TiramisuDataGrid.EventArgs;
+using TiramisuDataGrid.Event;
 
 namespace TiramisuDataGrid.Configuration.Control
 {
