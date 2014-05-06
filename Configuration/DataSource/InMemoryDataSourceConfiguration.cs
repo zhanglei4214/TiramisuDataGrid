@@ -41,36 +41,24 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #region Public Methods
 
-        public override void Bind(BindingConfiguration configuration)
-        {            
-            int index = this.GetItemsControlIndex();
-
+        public override void Bind(ItemsControl itemsControl, BindingConfiguration configuration)
+        {                        
             if (configuration.Limit == int.MaxValue)
             {
-                ((ItemsControl)this.Owner.Children[index]).ItemsSource = this.collection;
+                itemsControl.ItemsSource = this.collection;
             }
             else
             {
-                ((ItemsControl)this.Owner.Children[index]).ItemsSource = this.collection.Take(configuration.Limit);
+                itemsControl.ItemsSource = this.collection.Take(configuration.Limit);
             }
         }
 
-        public override void AdjustBinding(BindingConfiguration configuration, string changedProperty)
+        public override void AdjustBinding(ItemsControl itemsControl, BindingConfiguration configuration, string changedProperty)
         {
             if (changedProperty == "Skip")
-            {
-                int index = this.GetItemsControlIndex();
-                ((ItemsControl)this.Owner.Children[index]).ItemsSource = this.collection.Skip(configuration.Skip).Take(configuration.Limit);
+            {                
+                itemsControl.ItemsSource = this.collection.Skip(configuration.Skip).Take(configuration.Limit);
             }
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private int GetItemsControlIndex()
-        {
-            return this.Owner.Children.Count - 1;
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Data;
 using TiramisuDataGrid.Attributes;
 using TiramisuDataGrid.Common;
 using TiramisuDataGrid.Configuration.Control;
@@ -41,13 +42,15 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #region Public Methods
 
-        public abstract void Bind(BindingConfiguration configuration);
+        public abstract void Bind(ItemsControl itemsControl, BindingConfiguration configuration);
 
-        public abstract void AdjustBinding(BindingConfiguration configuration, string changedProperty);
+        public abstract void AdjustBinding(ItemsControl itemsControl, BindingConfiguration configuration, string changedProperty);
 
         public void Attach()
         {
-            this.Bind(this.bindingConfiguration);
+            this.Bind(this.GetItemsControl(), this.bindingConfiguration);
+
+            this.RegisterSortingBehavior();
         }
 
         public void Detach()
@@ -102,9 +105,52 @@ namespace TiramisuDataGrid.Configuration.DataSource
             }
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void BindingConfigurationPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
         {
-            this.AdjustBinding(sender as BindingConfiguration, e.PropertyName);
+            this.bindingConfiguration = sender as BindingConfiguration;
+            this.AdjustBinding(this.GetItemsControl(), this.bindingConfiguration, e.PropertyName);
+        }
+
+        private ItemsControl GetItemsControl()
+        {
+            return this.Owner.Children[this.Owner.Children.Count - 1] as ItemsControl;
+        }
+
+        private void RegisterSortingBehavior()
+        {
+            if (this.GetItemsControl() is DataGrid)
+            {
+                this.RegisterDataGridSortingBehavior(this.GetItemsControl() as DataGrid);
+            }
+            else if (this.GetItemsControl() is ListView)
+            {
+                throw new NotSupportedException("Do not support sorting for ListView.");
+            }
+            else
+            {
+                throw new NotSupportedException("Do not support sorting for this ItemsControl.");
+            }
+        }
+
+        private void RegisterDataGridSortingBehavior(DataGrid dataGrid)
+        {
+            dataGrid.Sorting += (sender, e) => {
+
+                ICollectionView dataView = CollectionViewSource.GetDefaultView(dataGrid.ItemsSource);
+
+                dataView.SortDescriptions.Clear();
+                SortDescription sortDescription = new SortDescription();
+                sortDescription.Direction = this.bindingConfiguration.GetSortDirection(e.Column.Header.ToString());
+                sortDescription.PropertyName = e.Column.Header.ToString();
+                dataView.SortDescriptions.Add(sortDescription);
+                dataView.Refresh();
+
+                e.Handled = true;
+            };
         }
 
         #endregion

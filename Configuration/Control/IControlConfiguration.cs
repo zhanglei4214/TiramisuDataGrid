@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using TiramisuDataGrid.Attributes;
 using TiramisuDataGrid.Converters;
 
 namespace TiramisuDataGrid.Configuration.Control

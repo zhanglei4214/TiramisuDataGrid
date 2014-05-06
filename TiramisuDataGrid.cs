@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using TiramisuDataGrid.Attributes;
 using TiramisuDataGrid.Common;
 using TiramisuDataGrid.Configuration.Control;
 using TiramisuDataGrid.Configuration.DataSource;
