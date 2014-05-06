@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using TiramisuDataGrid.Common;
 using TiramisuDataGrid.Control;
@@ -15,8 +14,6 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         private int skip;
 
-        private readonly Dictionary<string, ListSortDirection> sortingDict;
-
         #endregion
 
         #region Constructors
@@ -30,8 +27,6 @@ namespace TiramisuDataGrid.Configuration.DataSource
         {
             this.Limit = limit;
             this.Skip = 0;
-
-            this.sortingDict = new Dictionary<string, ListSortDirection>();
 
             this.HookEvents();
         }
@@ -72,23 +67,6 @@ namespace TiramisuDataGrid.Configuration.DataSource
                 this.skip = value;
                 this.NotifyPropertyChanged("Skip");
             }
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        public ListSortDirection GetSortDirection(string name)
-        {
-            if (this.sortingDict.ContainsKey(name) == false)
-            {
-                return this.sortingDict[name] = ListSortDirection.Ascending;
-            }
-
-            ListSortDirection result = this.sortingDict[name];
-            this.sortingDict[name] = this.sortingDict[name] == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
-
-            return result;
         }
 
         #endregion

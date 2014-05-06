@@ -142,12 +142,16 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
                 ICollectionView dataView = CollectionViewSource.GetDefaultView(dataGrid.ItemsSource);
 
+                ListSortDirection direction = (e.Column.SortDirection != ListSortDirection.Ascending) ? ListSortDirection.Ascending : ListSortDirection.Descending;
+
                 dataView.SortDescriptions.Clear();
                 SortDescription sortDescription = new SortDescription();
-                sortDescription.Direction = this.bindingConfiguration.GetSortDirection(e.Column.Header.ToString());
+                sortDescription.Direction = direction;
                 sortDescription.PropertyName = e.Column.Header.ToString();
                 dataView.SortDescriptions.Add(sortDescription);
                 dataView.Refresh();
+
+                e.Column.SortDirection = direction;
 
                 e.Handled = true;
             };
