@@ -28,7 +28,7 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #region Public Methods
 
-        public override IEnumerable<T> LoadFromOriginalSource()
+        public override IEnumerable<T> LoadFromOriginalSource(BindingConfiguration configuration)
         {
             return this.collection;
         }

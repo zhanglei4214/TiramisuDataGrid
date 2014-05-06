@@ -58,6 +58,7 @@
     <Compile Include="Configuration\Control\IControlConfiguration.cs" />
     <Compile Include="Configuration\Control\StandardConfiguration.cs" />
     <Compile Include="Configuration\DataSource\BindingConfiguration.cs" />
+    <Compile Include="Configuration\DataSource\CSVFileDataSourceConfiguration.cs" />
     <Compile Include="Configuration\DataSource\DataSourceConfigurationBase.cs" />
     <Compile Include="Configuration\DataSource\DataSourceMode.cs" />
     <Compile Include="Configuration\DataSource\FileDataSourceConfiguration.cs" />

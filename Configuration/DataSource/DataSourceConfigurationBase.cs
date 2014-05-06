@@ -44,17 +44,17 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #region Public Methods
 
-        public abstract IEnumerable<T> LoadFromOriginalSource();
+        public abstract IEnumerable<T> LoadFromOriginalSource(BindingConfiguration configuration);
 
         public void Bind(ItemsControl itemsControl, BindingConfiguration configuration)
         {
             if (configuration.Limit == int.MaxValue)
             {
-                itemsControl.ItemsSource = this.LoadFromOriginalSource();
+                itemsControl.ItemsSource = this.LoadFromOriginalSource(configuration);
             }
             else
             {
-                itemsControl.ItemsSource = this.LoadFromOriginalSource().Take(configuration.Limit);
+                itemsControl.ItemsSource = this.LoadFromOriginalSource(configuration).Take(configuration.Limit);
             }
         }
 
@@ -62,7 +62,7 @@ namespace TiramisuDataGrid.Configuration.DataSource
         {
             if (changedProperty == "Skip")
             {
-                itemsControl.ItemsSource = this.LoadFromOriginalSource().Skip(configuration.Skip).Take(configuration.Limit);
+                itemsControl.ItemsSource = this.LoadFromOriginalSource(configuration).Skip(configuration.Skip).Take(configuration.Limit);
             }
         }
 

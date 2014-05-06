@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TiramisuDataGrid.Configuration.DataSource
 {
@@ -21,23 +20,13 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #endregion
 
-        #region Properties
-
-        public string Path
-        {
-            get
-            {
-                return this.path;
-            }
-        }
-
-        #endregion
-
         #region Public Methods
 
-        public override IEnumerable<T> LoadFromOriginalSource()
+        public abstract IEnumerable<T> LoadFromFile(string path, BindingConfiguration configuration);
+
+        public override IEnumerable<T> LoadFromOriginalSource(BindingConfiguration configuration)
         {
-            throw new NotImplementedException();
+            return this.LoadFromFile(this.path, configuration);
         }
 
         #endregion        
