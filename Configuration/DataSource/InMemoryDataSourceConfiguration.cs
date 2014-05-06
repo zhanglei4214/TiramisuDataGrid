@@ -1,10 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace TiramisuDataGrid.Configuration.DataSource
 {
-    public class InMemoryDataSourceConfiguration<T> : DataSourceConfigurationBase
+    public class InMemoryDataSourceConfiguration<T> : DataSourceConfigurationBase<T>
     {
         #region Fields
 
@@ -27,38 +26,11 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #endregion
 
-        #region Properties
-
-        public ObservableCollection<T> Collection
-        {
-            get
-            {
-                return this.collection;
-            }
-        }
-
-        #endregion
-
         #region Public Methods
 
-        public override void Bind(ItemsControl itemsControl, BindingConfiguration configuration)
-        {                        
-            if (configuration.Limit == int.MaxValue)
-            {
-                itemsControl.ItemsSource = this.collection;
-            }
-            else
-            {
-                itemsControl.ItemsSource = this.collection.Take(configuration.Limit);
-            }
-        }
-
-        public override void AdjustBinding(ItemsControl itemsControl, BindingConfiguration configuration, string changedProperty)
+        public override IEnumerable<T> LoadFromOriginalSource()
         {
-            if (changedProperty == "Skip")
-            {                
-                itemsControl.ItemsSource = this.collection.Skip(configuration.Skip).Take(configuration.Limit);
-            }
+            return this.collection;
         }
 
         #endregion

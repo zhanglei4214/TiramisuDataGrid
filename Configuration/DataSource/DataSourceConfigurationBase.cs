@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
 using TiramisuDataGrid.Attributes;
@@ -9,7 +11,7 @@ using TiramisuDataGrid.Configuration.Control;
 namespace TiramisuDataGrid.Configuration.DataSource
 {
     [Dependency(DependencyName.ControlTemplate)]
-    public abstract class DataSourceConfigurationBase : IDataSourceConfiguration
+    public abstract class DataSourceConfigurationBase<T> : IDataSourceConfiguration
     {
         #region Fields
 
@@ -42,9 +44,27 @@ namespace TiramisuDataGrid.Configuration.DataSource
 
         #region Public Methods
 
-        public abstract void Bind(ItemsControl itemsControl, BindingConfiguration configuration);
+        public abstract IEnumerable<T> LoadFromOriginalSource();
 
-        public abstract void AdjustBinding(ItemsControl itemsControl, BindingConfiguration configuration, string changedProperty);
+        public void Bind(ItemsControl itemsControl, BindingConfiguration configuration)
+        {
+            if (configuration.Limit == int.MaxValue)
+            {
+                itemsControl.ItemsSource = this.LoadFromOriginalSource();
+            }
+            else
+            {
+                itemsControl.ItemsSource = this.LoadFromOriginalSource().Take(configuration.Limit);
+            }
+        }
+
+        public void AdjustBinding(ItemsControl itemsControl, BindingConfiguration configuration, string changedProperty)
+        {
+            if (changedProperty == "Skip")
+            {
+                itemsControl.ItemsSource = this.LoadFromOriginalSource().Skip(configuration.Skip).Take(configuration.Limit);
+            }
+        }
 
         public void Attach()
         {

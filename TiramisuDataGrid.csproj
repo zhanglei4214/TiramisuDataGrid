@@ -60,6 +60,7 @@
     <Compile Include="Configuration\DataSource\BindingConfiguration.cs" />
     <Compile Include="Configuration\DataSource\DataSourceConfigurationBase.cs" />
     <Compile Include="Configuration\DataSource\DataSourceMode.cs" />
+    <Compile Include="Configuration\DataSource\FileDataSourceConfiguration.cs" />
     <Compile Include="Configuration\DataSource\IDataSourceConfiguration.cs" />
     <Compile Include="Configuration\DataSource\InMemoryDataSourceConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
